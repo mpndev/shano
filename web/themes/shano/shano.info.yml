@@ -1,0 +1,7 @@
+name: Shano
+type: theme
+description: 'Let see...'
+package: MpnDev
+version: VERSION
+core: 8.x
+base theme: bartik
