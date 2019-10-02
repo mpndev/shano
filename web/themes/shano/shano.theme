@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @param $variables
+ */
+function shano_preprocess_field(&$variables, $hook) {
+  $element = $variables['element'];
+  $id = $element['#object']->id();
+  $node = \Drupal\node\Entity\Node::load($id);
+  //todo: find the right hook. If Content is "Slider", attach class "image-slider" to it!
+}
+
+/**
+ * Implements page_attachments_HOOK().
+ *
+ * @param $page
+ */
+function shano_page_attachments_alter(&$page) {
+  $path = \Drupal::request()->getRequestUri();
+  if($path == '/home') {
+    $page['#attached']['library'][] = 'shano/shano-slider';
+  }
+}
