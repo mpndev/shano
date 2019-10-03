@@ -1,5 +1,6 @@
-shano-slider:
+shano-slideshow:
   version: 1.x
   css:
     theme:
+      css/slideshow.css: {}
       css/slider.css: {}

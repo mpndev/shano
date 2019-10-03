@@ -1,5 +1,35 @@
-.custom-slider-image {
-  float: none !important;
-  width: 20px;
-  height: 20px;
+.custom-slider {
+  float: none;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.field--name-field-slider-image {
+  margin: 0 auto !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateX(163%);
+  animation: slide-me 15s linear infinite;
+}
+
+@keyframes slide-me {
+  0% {
+  transform: translateX(163%);
+  }
+  50% {
+    transform: translateX(-163%);
+  }
+  0% {
+    transform: translateX(163%);
+  }
+}
+
+.custom-slider img {
+  float: none;
+  margin: 0;
+  width: 70%;
 }
