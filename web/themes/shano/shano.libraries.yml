@@ -10,3 +10,9 @@ shano-search-events:
   css:
     theme:
       css/search-events.css: {}
+
+shano-most-recent-events:
+  version: 1.x
+  css:
+    theme:
+      css/most-recent-events.css: {}

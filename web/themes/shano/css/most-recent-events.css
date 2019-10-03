@@ -1,0 +1,16 @@
+.most-recent-events-wrapper {
+  border: 5px solid #1d84c3;
+  border-radius: 15px;
+  -webkit-box-shadow: 0px 20px 11px -6px rgba(0,0,0,0.42);
+  -moz-box-shadow: 0px 20px 11px -6px rgba(0,0,0,0.42);
+  box-shadow: 0px 20px 11px -6px rgba(0,0,0,0.42);
+  margin-top: 3rem;
+  padding: 1rem;
+}
+
+.most-recent-events-wrapper > div > h2 {
+  display: block !important;
+  font-size: 3rem;
+  margin: 0 auto;
+  text-align: center;
+}

@@ -7,5 +7,22 @@
  */
 function shano_preprocess_paragraph__slideshow(&$variables) {
   $variables['#attached']['library'][] = 'shano/shano-slideshow';
+}
+
+/**
+ * Implements template_preprocess_paragraph().
+ *
+ * @param $variables
+ */
+function shano_preprocess_block__views_block__events_block_1(&$variables) {
   $variables['#attached']['library'][] = 'shano/shano-search-events';
+}
+
+/**
+ * Implements template_preprocess_paragraph().
+ *
+ * @param $variables
+ */
+function shano_preprocess_field__node__field_most_recent_events(&$variables) {
+  $variables['#attached']['library'][] = 'shano/shano-most-recent-events';
 }
