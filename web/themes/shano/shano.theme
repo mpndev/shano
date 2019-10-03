@@ -7,4 +7,5 @@
  */
 function shano_preprocess_paragraph__slideshow(&$variables) {
   $variables['#attached']['library'][] = 'shano/shano-slideshow';
+  $variables['#attached']['library'][] = 'shano/shano-search-events';
 }

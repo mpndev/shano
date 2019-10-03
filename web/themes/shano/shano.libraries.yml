@@ -4,3 +4,9 @@ shano-slideshow:
     theme:
       css/slideshow.css: {}
       css/slider.css: {}
+
+shano-search-events:
+  version: 1.x
+  css:
+    theme:
+      css/search-events.css: {}
