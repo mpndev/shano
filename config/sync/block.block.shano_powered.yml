@@ -1,0 +1,22 @@
+uuid: e7887b1d-4f8d-4a5d-98d5-146b3bf4de68
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - shano
+_core:
+  default_config_hash: jQQUUWN2Uxr5qZtc9zcJKBCxpKY8orN1u2HPqYYRQDI
+id: shano_powered
+theme: shano
+region: header
+weight: -1
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  provider: system
+  label_display: '0'
+visibility: {  }

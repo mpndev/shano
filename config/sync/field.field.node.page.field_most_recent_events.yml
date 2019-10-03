@@ -1,0 +1,25 @@
+uuid: 81156365-d3e2-4f1a-9db3-dfdfe5b394a8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_most_recent_events
+    - node.type.page
+  module:
+    - block_field
+id: node.page.field_most_recent_events
+field_name: field_most_recent_events
+entity_type: node
+bundle: page
+label: 'Most Recent Events'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    plugin_id: 'views_block:most_recent_events-block_1'
+    settings: {  }
+default_value_callback: ''
+settings:
+  plugin_ids: {  }
+field_type: block_field

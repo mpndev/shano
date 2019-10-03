@@ -1,0 +1,73 @@
+uuid: e8337db7-1cda-42df-a54e-f7f6967c7dba
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.node.search_index
+    - field.field.node.event.field_event_d
+    - field.field.node.event.field_event_image
+    - field.field.node.event.field_event_s
+    - field.field.node.event.field_event_ticket_price
+    - field.field.node.event.field_event_tickets_quantity
+    - node.type.event
+  module:
+    - datetime
+    - image
+    - text
+    - user
+id: node.event.search_index
+targetEntityType: node
+bundle: event
+mode: search_index
+content:
+  field_event_d:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_event_image:
+    weight: 1
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_event_s:
+    weight: 2
+    label: inline
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_event_ticket_price:
+    weight: 3
+    label: inline
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+    region: content
+  field_event_tickets_quantity:
+    weight: 4
+    label: inline
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  links:
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

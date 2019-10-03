@@ -1,0 +1,25 @@
+uuid: c0be9db3-5307-429c-b19e-fe364aa7405e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.slider.field_slider_image
+    - image.style.large
+    - paragraphs.paragraphs_type.slider
+  module:
+    - image
+id: paragraph.slider.default
+targetEntityType: paragraph
+bundle: slider
+mode: default
+content:
+  field_slider_image:
+    weight: 0
+    label: hidden
+    settings:
+      image_style: large
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+hidden: {  }

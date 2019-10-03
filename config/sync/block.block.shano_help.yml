@@ -1,0 +1,22 @@
+uuid: 38b0683a-a63f-4d63-ac70-47b991484924
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - shano
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: shano_help
+theme: shano
+region: content
+weight: -4
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

@@ -1,0 +1,22 @@
+uuid: 38546685-b6e6-4bc0-b93f-75de2eb4e51f
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - shano
+_core:
+  default_config_hash: oXUb3JZR2WW5VOdw4HrhRicCsq51mCgLfRyvheG68ck
+id: shano_breadcrumbs
+theme: shano
+region: header
+weight: -3
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  provider: system
+  label_display: '0'
+visibility: {  }

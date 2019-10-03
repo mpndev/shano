@@ -1,0 +1,20 @@
+uuid: 0e891803-8db4-4128-8b29-98a5174b8ff8
+langcode: en
+status: true
+dependencies:
+  theme:
+    - shano
+_core:
+  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
+id: shano_local_actions
+theme: shano
+region: content
+weight: -3
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

@@ -1,0 +1,26 @@
+uuid: 4c77f8e0-2d61-4eeb-923a-ea899303689d
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.page.field_block
+    - field.field.node.page.field_most_recent_events
+    - field.field.node.page.field_paragraphs_content
+    - node.type.page
+  module:
+    - user
+id: node.page.teaser
+targetEntityType: node
+bundle: page
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_block: true
+  field_most_recent_events: true
+  field_paragraphs_content: true

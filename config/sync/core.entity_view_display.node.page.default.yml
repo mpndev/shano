@@ -1,0 +1,43 @@
+uuid: 880bc4b9-8341-4486-ba7b-903057d6c259
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.page.field_block
+    - field.field.node.page.field_most_recent_events
+    - field.field.node.page.field_paragraphs_content
+    - node.type.page
+  module:
+    - block_field
+    - entity_reference_revisions
+    - user
+id: node.page.default
+targetEntityType: node
+bundle: page
+mode: default
+content:
+  field_block:
+    weight: 2
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: block_field
+    region: content
+  field_most_recent_events:
+    weight: 3
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: block_field
+    region: content
+  field_paragraphs_content:
+    type: entity_reference_revisions_entity_view
+    weight: 1
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+hidden:
+  links: true

@@ -1,0 +1,22 @@
+uuid: e1d4d2f8-f46c-47df-aad6-56e94df33c03
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - shano
+_core:
+  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
+id: shano_messages
+theme: shano
+region: header
+weight: -4
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

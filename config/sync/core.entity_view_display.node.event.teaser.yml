@@ -1,0 +1,48 @@
+uuid: d6885840-0b3c-4953-83d5-643db7fe7a08
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.event.field_event_d
+    - field.field.node.event.field_event_image
+    - field.field.node.event.field_event_s
+    - field.field.node.event.field_event_ticket_price
+    - field.field.node.event.field_event_tickets_quantity
+    - image.style.thumbnail
+    - node.type.event
+  module:
+    - image
+    - text
+    - user
+id: node.event.teaser
+targetEntityType: node
+bundle: event
+mode: teaser
+content:
+  field_event_d:
+    type: text_trimmed
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      trim_length: 80
+    third_party_settings: {  }
+  field_event_image:
+    type: image
+    weight: 2
+    region: content
+    label: hidden
+    settings:
+      image_style: thumbnail
+      image_link: content
+    third_party_settings: {  }
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_event_s: true
+  field_event_ticket_price: true
+  field_event_tickets_quantity: true

@@ -1,0 +1,22 @@
+uuid: e4263ac9-a12c-4fbd-b565-c2eda77c67b0
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.events.field_event
+    - node.type.events
+  module:
+    - user
+id: node.events.teaser
+targetEntityType: node
+bundle: events
+mode: teaser
+content:
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_event: true

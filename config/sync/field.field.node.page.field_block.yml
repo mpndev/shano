@@ -1,0 +1,25 @@
+uuid: ab91bca1-ef55-408c-bf2c-9659954270b9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_block
+    - node.type.page
+  module:
+    - block_field
+id: node.page.field_block
+field_name: field_block
+entity_type: node
+bundle: page
+label: Block
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    plugin_id: 'views_exposed_filter_block:events-page_1'
+    settings: {  }
+default_value_callback: ''
+settings:
+  plugin_ids: {  }
+field_type: block_field

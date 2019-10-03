@@ -1,0 +1,18 @@
+uuid: d1e0dcd3-edf5-4352-a4b1-d37283e979a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.page
+id: node.page.title
+field_name: title
+entity_type: node
+bundle: page
+label: 'Paragraphs Content'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

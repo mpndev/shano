@@ -1,0 +1,9 @@
+uuid: e20c67c7-b605-4cf8-b0a4-0dbfd1b00e47
+langcode: en
+status: true
+dependencies: {  }
+id: slideshow
+label: Slideshow
+icon_uuid: null
+description: 'Wrapper for Paragraphs of type "Slider".'
+behavior_plugins: {  }
