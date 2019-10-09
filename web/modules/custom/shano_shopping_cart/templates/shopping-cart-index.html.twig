@@ -1,0 +1,6 @@
+{% for data in events %}
+  {{ data.event.field_event_d.value | raw }}
+  <img src="{{ file_url(data.event.field_event_image.entity.uri.value) }}" alt="event image">
+  <div class="current_cart_tickets">{{ data.ordered_tickets_quantity }}{{ data.ordered_tickets_quantity_text }}</div>
+  <button>Buy the tickets</button>
+{% endfor %}

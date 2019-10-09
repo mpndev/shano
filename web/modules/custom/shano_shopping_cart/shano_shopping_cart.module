@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @param $existing
+ * @param $type
+ * @param $theme
+ * @param $path
+ *
+ * @return array
+ */
+function shano_shopping_cart_theme($existing, $type, $theme, $path) {
+  return [
+    'shopping_cart_index' => [
+      'variables' => ['events' => NULL],
+    ],
+  ];
+}

@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\shano_shopping_cart\Form\AddTicketToCartForm;
+
 /**
  * Implements template_preprocess_paragraph().
  *
@@ -25,4 +27,17 @@ function shano_preprocess_block__views_block__events_block_1(&$variables) {
  */
 function shano_preprocess_field__node__field_most_recent_events(&$variables) {
   $variables['#attached']['library'][] = 'shano/shano-most-recent-events';
+}
+
+/**
+ * Implements template_preprocess_paragraph().
+ *
+ * @param $variables
+ */
+function shano_preprocess_node__event__full(&$variables) {
+  $uniq_form_id = $variables["node"]->id();
+  $add_ticket_to_cart_form = new AddTicketToCartForm($uniq_form_id);
+  $form = \Drupal::formBuilder()->getForm($add_ticket_to_cart_form);
+  $variables['add_ticket_form'] = $form;
+  $variables['message_box'] = '<div id="message_box' . $uniq_form_id . '"></div>';
 }

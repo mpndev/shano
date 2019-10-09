@@ -1,0 +1,15 @@
+shano_shopping_cart.index:
+  path: '/shopping-cart'
+  defaults:
+    _controller: '\Drupal\shano_shopping_cart\Controller\ShanoShoppingCartController::index'
+    _title: ''
+  requirements:
+    _permission: 'access content'
+
+shano_shopping_cart.store:
+  path: '/shopping-cart/store'
+  defaults:
+    _controller: '\Drupal\shano_shopping_cart\Controller\ShanoShoppingCartController::store'
+    _title: ''
+  requirements:
+    _permission: 'access content'
