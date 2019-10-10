@@ -35,9 +35,10 @@ function shano_preprocess_field__node__field_most_recent_events(&$variables) {
  * @param $variables
  */
 function shano_preprocess_node__event__full(&$variables) {
+
+  /* We use Event uniq id, because some pages must have multiple forms with uniq ids */
   $uniq_form_id = $variables["node"]->id();
-  $add_ticket_to_cart_form = new AddTicketToCartForm($uniq_form_id);
-  $form = \Drupal::formBuilder()->getForm($add_ticket_to_cart_form);
-  $variables['add_ticket_form'] = $form;
-  $variables['message_box'] = '<div id="message_box' . $uniq_form_id . '"></div>';
+
+  $variables['content']['add_ticket_form'] = \Drupal::formBuilder()->getForm(new AddTicketToCartForm($uniq_form_id));
+  $variables['content']['add_ticket_form']['#weight'] = 4;
 }

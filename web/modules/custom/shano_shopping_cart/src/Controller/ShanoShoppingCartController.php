@@ -21,8 +21,8 @@ class ShanoShoppingCartController extends ControllerBase {
       $data[$key]['event'] = Node::load($ticket_data['event_id']);
       $data[$key]['ordered_tickets_quantity'] = $ticket_data['tickets_quantity'];
       $data[$key]['ordered_tickets_quantity_text'] = ($ticket_data['tickets_quantity'] > 1)
-        ? ' tickets are currently in the cart.'
-        : ' ticket is currently in the cart.';
+        ? t(' tickets are currently in the cart.')
+        : t(' ticket is currently in the cart.');
     }
 
     return [

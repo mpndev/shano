@@ -45,10 +45,6 @@ class AddTicketToCartForm extends FormBase {
    * @return array
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $form['node_id'] = [
-      '#type' => 'hidden',
-      '#value' => $this->event->id(),
-    ];
     $form['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Shut up and take my money!'),
@@ -59,7 +55,7 @@ class AddTicketToCartForm extends FormBase {
         'event' => 'click',
         'progress' => [
           'type' => 'throbber',
-          'message' => $this->t('Verifying entry...'),
+          'message' => t('Verifying entry...'),
         ],
       ]
     ];
@@ -85,21 +81,18 @@ class AddTicketToCartForm extends FormBase {
    */
   public function processTicketAdding(array &$form, FormStateInterface $form_state) {
     $elem = [
-      '#type' => 'text',
-      '#size' => '60',
-      '#disabled' => TRUE,
-      '#value' => "",
+      '#type' => 'div',
       '#attributes' => [
-        'id' => ['message_box' . $this->event->id()],
+        'id' => 'message_box' . $this->event->id(),
       ],
     ];
 
-    $dialogText['#attached']['library'][] = 'core/drupal.dialog.ajax';
-    $dialogText['#markup'] = $this->wasTicketAdded ? 'Ticket was added to your shopping cart.' : 'No more tickets left.';
+    $dialog_text['#attached']['library'][] = 'core/drupal.dialog.ajax';
+    $dialog_text['#markup'] = $this->wasTicketAdded ? t('Ticket was added to your shopping cart.') : t('No more tickets left.');
 
     $response = new AjaxResponse();
     $response->addCommand(new ReplaceCommand('#message_box' . $this->event->id(), \Drupal::service('renderer')->render($elem)));
-    $response->addCommand(new OpenModalDialogCommand('Info About Your Request...', $dialogText, ['width' => '300']));
+    $response->addCommand(new OpenModalDialogCommand($this->event->get('title')->value, $dialog_text, ['width' => '300']));
 
     return $response;
   }
@@ -110,9 +103,10 @@ class AddTicketToCartForm extends FormBase {
   private function addTicket () {
     $tickets = $this->shopping_cart->get('tickets');
     foreach ($tickets as &$ticket) {
-      if ($ticket['event_id'] === $this->event->id()) {
+      if ($this->ticketIsFromThisEvent($ticket)) {
         $ticket['tickets_quantity']++;
         $this->have_tickets_for_this_event = TRUE;
+        break;
       }
     }
     if ($this->have_tickets_for_this_event === FALSE) {
@@ -130,6 +124,15 @@ class AddTicketToCartForm extends FormBase {
    */
   private function haveAvailableTickets() {
     return $this->tickets->get('field_quantity')->getString() > 0;
+  }
+
+  /**
+   * @param $ticket
+   *
+   * @return bool
+   */
+  private function ticketIsFromThisEvent($ticket) {
+    return $ticket['event_id'] === $this->event->id();
   }
 
 }
