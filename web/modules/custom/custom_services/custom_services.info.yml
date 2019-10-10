@@ -1,0 +1,4 @@
+name: Custom Services
+description: Custom Services. Place all helpful classes here. Drupal do not provide alternative solution.
+type: module
+core: 8.x

@@ -1,0 +1,5 @@
+services:
+  custom_services.shopping_cart:
+    class: Drupal\custom_services\ShoppingCart
+  custom_services.event:
+    class: Drupal\custom_services\Event
