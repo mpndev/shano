@@ -11,14 +11,23 @@ class ShoppingCart {
     'was_ticket_added' => FALSE,
   ];
 
+  /**
+   * ShoppingCart constructor.
+   */
   public function __construct() {
     $this->shopping_cart = \Drupal::service('tempstore.private')->get('shopping_cart');
   }
 
+  /**
+   * @return mixed
+   */
   public function getTickets() {
     return $this->shopping_cart->get('tickets');
   }
 
+  /**
+   * @param \Drupal\custom_services\Event $event
+   */
   public function addTicketForEvent(Event $event) {
     $tickets = $this->getTickets();
 
@@ -39,6 +48,12 @@ class ShoppingCart {
     $this->state_variables['was_ticket_added'] = TRUE;
   }
 
+  /**
+   * @param $ticket
+   * @param $event
+   *
+   * @return bool
+   */
   public function ticketIsFromThisEvent($ticket, $event) {
     return $ticket['event_id'] === $event->id();
   }
