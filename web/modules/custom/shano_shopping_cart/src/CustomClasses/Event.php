@@ -1,20 +1,27 @@
 <?php
 
-namespace Drupal\custom_services;
-
+namespace Drupal\shano_shopping_cart\CustomClasses;
 
 use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
 
 class Event {
 
+  /**
+   * The event instance.
+   *
+   * @var object $event
+   */
   public $event = NULL;
-  public $tickets = [];
 
   /**
-   * @param $id
+   * The event tickets instance
+   *
+   * @var $tickets
    */
-  public function load($id) {
+  public $tickets = [];
+
+  public function __construct($id) {
     $this->event = Node::load($id);
     $this->tickets = Paragraph::load($this->event->get('field_tickets')->getValue()[0]['target_id']);
   }

@@ -2,17 +2,24 @@
 
 namespace Drupal\shano_shopping_cart\Form;
 
-use Drupal\custom_services\Event;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
-use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\OpenModalDialogCommand;
+use Drupal\shano_shopping_cart\CustomClasses\Event;
+use Drupal\shano_shopping_cart\CustomClasses\ShoppingCart;
 
 class AddTicketToCartForm extends FormBase {
 
+  /**
+   * @var integer
+   */
   private $form_id = NULL;
+
+  /**
+   * @var object Event todo
+   */
   private $event = NULL;
   private $shopping_cart = NULL;
 
@@ -23,9 +30,8 @@ class AddTicketToCartForm extends FormBase {
    */
   public function __construct($event_id) {
     $this->form_id = 'shano_shopping_cart_form' . $event_id;
-    $this->event = \Drupal::service('custom_services.event');
-    $this->event->load($event_id);
-    $this->shopping_cart = \Drupal::service('custom_services.shopping_cart');
+    $this->event = new Event($event_id);
+    $this->shopping_cart = new ShoppingCart();
   }
 
   /**

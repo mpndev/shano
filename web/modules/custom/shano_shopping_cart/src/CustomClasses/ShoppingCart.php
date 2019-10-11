@@ -1,11 +1,17 @@
 <?php
 
-namespace Drupal\custom_services;
+namespace Drupal\shano_shopping_cart\CustomClasses;
 
-use Drupal\custom_services\Event;
 class ShoppingCart {
 
+  /**
+   *  $var object  $shopping_cart
+   */
   private $shopping_cart = NULL;
+
+  /**
+   * @var array $state_variables
+   */
   public $state_variables = [
     'have_tickets_for_this_event' => FALSE,
     'was_ticket_added' => FALSE,
@@ -26,7 +32,7 @@ class ShoppingCart {
   }
 
   /**
-   * @param \Drupal\custom_services\Event $event
+   * @param \Drupal\shano_shopping_cart\CustomClasses\Event $event
    */
   public function addTicketForEvent(Event $event) {
     $tickets = $this->getTickets();
@@ -38,11 +44,12 @@ class ShoppingCart {
         break;
       }
     }
-    if ($this->state_variables['have_tickets_for_this_event'] === FALSE) {
+    if (!$this->state_variables['have_tickets_for_this_event']) {
       $tickets[] = [
-        'event_id' => $this->event->id(),
+        'event_id' => $event->id(),
         'tickets_quantity' => 1,
       ];
+      $tickets;
     }
     $this->shopping_cart->set('tickets', $tickets);
     $this->state_variables['was_ticket_added'] = TRUE;
@@ -50,13 +57,12 @@ class ShoppingCart {
 
   /**
    * @param $ticket
-   * @param $event
+   * @param \Drupal\shano_shopping_cart\CustomClasses\Event $event
    *
    * @return bool
    */
-  public function ticketIsFromThisEvent($ticket, $event) {
+  public function ticketIsFromThisEvent($ticket, Event $event) {
     return $ticket['event_id'] === $event->id();
   }
-
 
 }
