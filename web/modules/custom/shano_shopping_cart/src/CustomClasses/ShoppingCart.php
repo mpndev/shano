@@ -49,7 +49,6 @@ class ShoppingCart {
         'event_id' => $event->id(),
         'tickets_quantity' => 1,
       ];
-      $tickets;
     }
     $this->shopping_cart->set('tickets', $tickets);
     $this->state_variables['was_ticket_added'] = TRUE;
