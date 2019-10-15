@@ -47,6 +47,7 @@ class ShanoShoppingCartController extends ControllerBase {
     $response = [
       '#theme' => 'shopping_cart_index',
       '#events' => $events_from_db,
+      '#total' => $shopping_cart->getTotal(),
       '#attached' => [
         'drupalSettings' => [
           'stripe_session_id' => $shano_stripe->session->id,

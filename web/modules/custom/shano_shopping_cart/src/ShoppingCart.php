@@ -105,4 +105,16 @@ class ShoppingCart {
     return $this;
   }
 
+  public function getTotal() {
+
+    $total = 0;
+    foreach ($this->getTickets() as $ticket) {
+      $price = intval((new Event($ticket['event_id']))->tickets->get('field_price')->value * 100);
+      $quantity = $ticket['tickets_quantity'];
+      $total += ($price * $quantity);
+    }
+
+    return $total / 100;
+  }
+
 }

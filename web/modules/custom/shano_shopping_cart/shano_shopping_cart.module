@@ -11,7 +11,7 @@
 function shano_shopping_cart_theme($existing, $type, $theme, $path) {
   return [
     'shopping_cart_index' => [
-      'variables' => ['events' => NULL, 'session_id' => NULL, 'stripe_public_key' => NULL]
+      'variables' => ['events' => NULL, 'total' => NULL]
     ],
   ];
 }
