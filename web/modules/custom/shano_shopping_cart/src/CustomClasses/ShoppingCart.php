@@ -64,4 +64,45 @@ class ShoppingCart {
     return $ticket['event_id'] === $event->id();
   }
 
+  /**
+   * @return $this
+   */
+  public function removeAllTickets() {
+    $this->shopping_cart->set('tickets', []);
+    return $this;
+  }
+
+  /**
+   * @return bool
+   */
+  public function isEmpty() {
+    return !(bool) count($this->getTickets());
+  }
+
+  /**
+   * @return $this
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function updateTicketsInEvents() {
+    foreach ($this->getTickets() as $ticket) {
+      $event = new Event($ticket['event_id']);
+      if ($ticket['tickets_quantity'] > $event->tickets->get('field_quantity')->value) {
+        throw new \Exception("Not Enough Tickets!");
+      }
+    }
+
+    foreach ($this->getTickets() as $ticket) {
+      $event = new Event($ticket['event_id']);
+
+      $shopping_cart_tickets_quantity = $ticket['tickets_quantity'];
+      $event_tickets_quantity = $event->tickets->get('field_quantity')->value;
+      $remaining_tickets = $event_tickets_quantity - $shopping_cart_tickets_quantity;
+
+      $event->tickets->set('field_quantity', $remaining_tickets);
+      $event->tickets->save();
+    }
+
+    return $this;
+  }
+
 }

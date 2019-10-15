@@ -6,10 +6,10 @@ shano_shopping_cart.index:
   requirements:
     _permission: 'access content'
 
-shano_shopping_cart.store:
-  path: '/shopping-cart/store'
+shano_shopping_cart.make_payment:
+  path: '/shopping-cart/make-payment'
   defaults:
-    _controller: '\Drupal\shano_shopping_cart\Controller\ShanoShoppingCartController::store'
+    _controller: '\Drupal\shano_shopping_cart\Controller\ShanoShoppingCartController::makePayment'
     _title: ''
   requirements:
     _permission: 'access content'

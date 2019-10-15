@@ -18,6 +18,16 @@ function shano_preprocess_paragraph__slideshow(&$variables) {
  */
 function shano_preprocess_block__views_block__events_block_1(&$variables) {
   $variables['#attached']['library'][] = 'shano/shano-search-events';
+  $variables['#attached']['library'][] = 'shano/shano-main';
+}
+
+/**
+ * Implements template_preprocess_THEME().
+ *
+ * @param $variables
+ */
+function shano_preprocess_node__event__teaser(&$variables) {
+  $variables['#attached']['library'][] = 'shano/shano-main';
 }
 
 /**

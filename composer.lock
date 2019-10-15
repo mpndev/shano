@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00aa670788708a02fb7bf59bf443ef13",
+    "content-hash": "6cc344b25e5f034644248f3b7ab11acc",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -4461,16 +4461,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v7.3.0",
+            "version": "v7.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "bebdb8360a6a1436c5b9d42e193e90eb047a4374"
+                "reference": "8278b83a28dd77deef733276d2301c6f8b424765"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/bebdb8360a6a1436c5b9d42e193e90eb047a4374",
-                "reference": "bebdb8360a6a1436c5b9d42e193e90eb047a4374",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/8278b83a28dd77deef733276d2301c6f8b424765",
+                "reference": "8278b83a28dd77deef733276d2301c6f8b424765",
                 "shasum": ""
             },
             "require": {
@@ -4514,7 +4514,7 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2019-10-02T20:16:43+00:00"
+            "time": "2019-10-07T17:24:41+00:00"
         },
         {
             "name": "symfony-cmf/routing",
@@ -9069,7 +9069,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.0.8"
+        "php": ">=7.0.8",
+        "ext-json": "*"
     },
     "platform-dev": []
 }
