@@ -5,10 +5,10 @@ namespace Drupal\shano_shopping_cart\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\shano_shopping_cart\Event;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\OpenModalDialogCommand;
-use Drupal\shano_shopping_cart\CustomClasses\Event;
-use Drupal\shano_shopping_cart\CustomClasses\ShoppingCart;
+use Drupal\shano_shopping_cart\ShoppingCart;
 
 class AddTicketToCartForm extends FormBase {
 

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Drupal\shano_shopping_cart\CustomClasses;
+namespace Drupal\shano_shopping_cart;
 
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;

@@ -2,11 +2,11 @@
 
 namespace Drupal\shano_shopping_cart\Controller;
 
+use Drupal\shano_shopping_cart\Event;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\shano_shopping_cart\ShanoStripe;
+use Drupal\shano_shopping_cart\ShoppingCart;
 use Symfony\Component\HttpFoundation\Request;
-use Drupal\shano_shopping_cart\CustomClasses\Event;
-use Drupal\shano_shopping_cart\CustomClasses\ShanoStripe;
-use Drupal\shano_shopping_cart\CustomClasses\ShoppingCart;
 
 class ShanoShoppingCartController extends ControllerBase {
 

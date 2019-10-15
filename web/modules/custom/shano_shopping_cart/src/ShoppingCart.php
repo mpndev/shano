@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\shano_shopping_cart\CustomClasses;
+namespace Drupal\shano_shopping_cart;
 
 class ShoppingCart {
 
