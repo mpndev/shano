@@ -3,14 +3,16 @@
 namespace Drupal\shano_shopping_cart\Form;
 
 use Drupal\Core\Form\FormBase;
+use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\shano_shopping_cart\Event;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\OpenModalDialogCommand;
 use Drupal\shano_shopping_cart\ShoppingCart;
 
-class AddTicketToCartForm extends FormBase {
+class ReduceTicketForm extends FormBase {
 
   /**
    * @var integer
@@ -18,10 +20,9 @@ class AddTicketToCartForm extends FormBase {
   private $form_id = NULL;
 
   /**
-   * @var object Event
+   * @var \Drupal\shano_shopping_cart\Event
    */
-  private $event = NULL;
-  private $shopping_cart = NULL;
+  public $event;
 
   /**
    * AddTicketToCartForm constructor.
@@ -29,9 +30,8 @@ class AddTicketToCartForm extends FormBase {
    * @param $event_id
    */
   public function __construct($event_id) {
-    $this->form_id = 'shano_shopping_cart_form' . $event_id;
+    $this->form_id = 'shano_shopping_cart_reduce_ticket_form' . $event_id;
     $this->event = new Event($event_id);
-    $this->shopping_cart = new ShoppingCart();
   }
 
   /**
@@ -50,10 +50,9 @@ class AddTicketToCartForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Shut up and take my money!'),
-      '#wrapper' => 'message_box' . $this->event->id(),
+      '#value' => $this->t('Remove 1 ticket'),
       '#ajax' => [
-        'callback' => '::processTicketAdding',
+        'callback' => '::processTicketReducing',
         'disable-refocus' => FALSE,
         'event' => 'click',
         'progress' => [
@@ -71,9 +70,7 @@ class AddTicketToCartForm extends FormBase {
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    if ($this->event->haveAvailableTickets()) {
-      $this->shopping_cart->addTicketForEvent($this->event);
-    }
+    //
   }
 
   /**
@@ -82,19 +79,26 @@ class AddTicketToCartForm extends FormBase {
    *
    * @return \Drupal\Core\Ajax\AjaxResponse
    */
-  public function processTicketAdding(array &$form, FormStateInterface $form_state) {
-    $elem = [
-      '#type' => 'div',
-      '#attributes' => [
-        'id' => 'message_box' . $this->event->id(),
-      ],
-    ];
+  public function processTicketReducing(array &$form, FormStateInterface $form_state) {
+    $shopping_cart = new ShoppingCart();
+    $shopping_cart->removeTicketForEvent($this->event);
+    $quantity = $shopping_cart->getTicketsQuantityForEvent($this->event);
+    $quantity_span = "<span id='tickets-quantity-" . $this->event->id() . "'>" . $quantity . "</span>";
 
     $dialog_text['#attached']['library'][] = 'core/drupal.dialog.ajax';
-    $dialog_text['#markup'] = $this->shopping_cart->state_variables['was_ticket_added'] ? t('Ticket was added to your shopping cart.') : t('No more tickets left.');
+    $dialog_text['#markup'] = t('Ticket was removed from your Shopping Cart!');
 
     $response = new AjaxResponse();
-    $response->addCommand(new ReplaceCommand('#message_box' . $this->event->id(), \Drupal::service('renderer')->render($elem)));
+    if ($quantity) {
+      $response->addCommand(new ReplaceCommand('#tickets-quantity-' . $this->event->id(), $quantity_span));
+    } else {
+      $response->addCommand(new ReplaceCommand('#main-block-' . $this->event->id(), ''));
+      if ($shopping_cart->isEmpty()) {
+        $response->addCommand(new RedirectCommand("http://shano.local/shopping-cart"));
+        return $response;
+      }
+    }
+    $response->addCommand(new HtmlCommand('#stripe-button', t('Buy the tickets for:') . ' ' . $shopping_cart->getTotal() . '$'));
     $response->addCommand(new OpenModalDialogCommand($this->event->title, $dialog_text, ['width' => '300']));
 
     return $response;

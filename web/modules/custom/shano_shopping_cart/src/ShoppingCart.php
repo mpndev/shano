@@ -32,7 +32,7 @@ class ShoppingCart {
   }
 
   /**
-   * @param \Drupal\shano_shopping_cart\CustomClasses\Event $event
+   * @param \Drupal\shano_shopping_cart\Event $event
    */
   public function addTicketForEvent(Event $event) {
     $tickets = $this->getTickets();
@@ -56,7 +56,7 @@ class ShoppingCart {
 
   /**
    * @param $ticket
-   * @param \Drupal\shano_shopping_cart\CustomClasses\Event $event
+   * @param \Drupal\shano_shopping_cart\Event $event
    *
    * @return bool
    */
@@ -106,7 +106,7 @@ class ShoppingCart {
   }
 
   /**
-   * @return float|int
+   * @return string
    */
   public function getTotal() {
 
@@ -117,7 +117,61 @@ class ShoppingCart {
       $total += ($price * $quantity);
     }
 
-    return $total / 100;
+    return number_format($total / 100, 2);
+  }
+
+  /**
+   * @param \Drupal\shano_shopping_cart\Event $event
+   *
+   * @return $this
+   */
+  public function removeTicketForEvent(Event $event) {
+    $tickets = $this->getTickets();
+    foreach ($tickets as $key => &$ticket) {
+      if ($ticket['event_id'] === $event->id()) {
+        if ($ticket['tickets_quantity'] > 0) {
+          $ticket['tickets_quantity']--;
+          if ($ticket['tickets_quantity'] == 0) {
+            $this->removeEvent($key);
+            break;
+          }
+          $this->shopping_cart->set('tickets', $tickets);
+        } else {
+          $this->removeEvent($key);
+        }
+        break;
+      }
+    }
+    return $this;
+  }
+
+  /**
+   * @param \Drupal\shano_shopping_cart\Event $event
+   *
+   * @return mixed|null
+   */
+  public function getTicketsQuantityForEvent(Event $event) {
+    $tickets = $this->getTickets();
+    foreach ($tickets as &$ticket) {
+      if ($ticket['event_id'] === $event->id()) {
+        return $ticket['tickets_quantity'];
+      }
+    }
+
+    return NULL;
+  }
+
+  /**
+   * @param $index
+   *
+   * @return $this
+   */
+  private function removeEvent($index) {
+    $tickets = $this->getTickets();
+    unset($tickets[$index]);
+    $this->shopping_cart->set('tickets', $tickets);
+
+    return $this;
   }
 
 }

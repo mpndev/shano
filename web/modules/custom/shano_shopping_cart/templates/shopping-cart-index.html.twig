@@ -1,10 +1,12 @@
-<button id="stripe-button">Buy the tickets for: {{ total }}$</button>
+<button id="stripe-button">{{'Buy the tickets for:'|t}} {{ total }}$</button>
 {% for data in events %}
-  <div class="main-block">
+  <div id="main-block-{{ data.id }}" class="main-block">
     {{ data.description | raw }}
     <img src="{{ file_url(data.image_url) }}" alt="{{ data.image_alt }}">
     <div class="current_cart_tickets">
-      {{ data.ordered_tickets_quantity }}{{ data.ordered_tickets_quantity_text }}
+      <span id="tickets-quantity-{{ data.id }}">{{ data.ordered_tickets_quantity }}</span><span>{{ data
+        .ordered_tickets_quantity_text }}</span>
     </div>
+    {{ data.reduce_ticket_form }}
   </div>
 {% endfor %}
