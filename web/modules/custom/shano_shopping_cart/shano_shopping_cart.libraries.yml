@@ -1,0 +1,8 @@
+stripe:
+  version: 3
+  js:
+    https://js.stripe.com/v3/: {}
+shano-stripe:
+  version: 1.x
+  js:
+    js/shano-stripe.js: {}

@@ -16,7 +16,7 @@ class ShanoShoppingCartController extends ControllerBase {
    */
   public function index() {
     $shopping_cart = new ShoppingCart();
-    $data = [];
+    $events_from_db = [];
     $stripe_line_items = [];
 
     if ($shopping_cart->isEmpty()) {
@@ -32,11 +32,11 @@ class ShanoShoppingCartController extends ControllerBase {
         'currency' => 'usd',
         'quantity' => $event_data['tickets_quantity'],
       ];
-      $data[$key]['description'] = strip_tags($event->event->get('field_event_d')->value);
-      $data[$key]['image_url'] = $event->event->field_event_image->entity->uri->value;
-      $data[$key]['image_alt'] = $event->event->field_event_image->alt;
-      $data[$key]['ordered_tickets_quantity'] = $event_data['tickets_quantity'];
-      $data[$key]['ordered_tickets_quantity_text'] = ($event_data['tickets_quantity'] > 1)
+      $events_from_db[$key]['description'] = strip_tags($event->event->get('field_event_d')->value);
+      $events_from_db[$key]['image_url'] = $event->event->field_event_image->entity->uri->value;
+      $events_from_db[$key]['image_alt'] = $event->event->field_event_image->alt;
+      $events_from_db[$key]['ordered_tickets_quantity'] = $event_data['tickets_quantity'];
+      $events_from_db[$key]['ordered_tickets_quantity_text'] = ($event_data['tickets_quantity'] > 1)
         ? t(' tickets are currently in the cart.')
         : t(' ticket is currently in the cart.');
     }
@@ -44,17 +44,20 @@ class ShanoShoppingCartController extends ControllerBase {
     $shano_stripe = new ShanoStripe();
     $shano_stripe->createSession($stripe_line_items);
 
-    return [
+    $response = [
       '#theme' => 'shopping_cart_index',
-      '#events' => $data,
-      '#session_id' => $shano_stripe->session->id,
-      '#stripe_public_key' => $shano_stripe->public_key,
+      '#events' => $events_from_db,
       '#attached' => [
         'drupalSettings' => [
+          'stripe_session_id' => $shano_stripe->session->id,
           'stripe_public_key' => $shano_stripe->public_key,
         ],
       ],
     ];
+    $response['#attached']['library'][] = 'shano_shopping_cart/stripe';
+    $response['#attached']['library'][] = 'shano_shopping_cart/shano-stripe';
+
+    return $response;
   }
 
   /**
