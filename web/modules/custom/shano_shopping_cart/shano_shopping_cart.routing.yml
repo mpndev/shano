@@ -13,3 +13,11 @@ shano_shopping_cart.make_payment:
     _title: ''
   requirements:
     _permission: 'access content'
+
+shano_shopping_cart.stripe_settings:
+  path: '/admin/config/stripe_settings'
+  defaults:
+    _form: '\Drupal\shano_shopping_cart\Form\StripeConfigurationForm'
+    _title: 'shano_shopping_cart Stripe configuration screen'
+  requirements:
+    _permission: 'administer site configuration'

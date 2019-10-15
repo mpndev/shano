@@ -2,20 +2,13 @@
 
 namespace Drupal\shano_shopping_cart\Controller;
 
-use Stripe\Stripe;
 use Drupal\Core\Controller\ControllerBase;
-use Stripe\Checkout\Session as StripeSession;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\shano_shopping_cart\CustomClasses\Event;
+use Drupal\shano_shopping_cart\CustomClasses\ShanoStripe;
 use Drupal\shano_shopping_cart\CustomClasses\ShoppingCart;
 
 class ShanoShoppingCartController extends ControllerBase {
-
-  public function __construct() {
-    define('STRIPE_SECRET_KEY', 'sk_test_p0UckJeEg99jiVQWZs1iaa1h00LQlWSLh0');
-    define('STRIPE_PUBLIC_KEY', 'pk_test_1p8Xr5GnL2BGdQTC73zF6Gl000TMrSf4yF');
-    Stripe::setApiKey(STRIPE_SECRET_KEY);
-  }
 
   /**
    * @return array
@@ -48,31 +41,31 @@ class ShanoShoppingCartController extends ControllerBase {
         : t(' ticket is currently in the cart.');
     }
 
-    Stripe::setApiKey(STRIPE_SECRET_KEY);
-
-    $session = StripeSession::create([
-      'payment_method_types' => ['card'],
-      'line_items' => $stripe_line_items,
-      'success_url' => 'http://shano.local/shopping-cart/make-payment?session_id={CHECKOUT_SESSION_ID}',
-      'cancel_url' => 'http://shano.local/shopping-cart/paymant-fail',
-    ]);
+    $shano_stripe = new ShanoStripe();
+    $shano_stripe->createSession($stripe_line_items);
 
     return [
       '#theme' => 'shopping_cart_index',
       '#events' => $data,
-      '#session_id' => $session->id,
-      '#stripe_public_key' => STRIPE_PUBLIC_KEY,
+      '#session_id' => $shano_stripe->session->id,
+      '#stripe_public_key' => $shano_stripe->public_key,
       '#attached' => [
         'drupalSettings' => [
-          'myObj' => ''
-        ]
-      ]
+          'stripe_public_key' => $shano_stripe->public_key,
+        ],
+      ],
     ];
   }
 
+  /**
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *
+   * @return array
+   */
   public function makePayment(Request $request) {
+    $shano_stripe = new ShanoStripe();
     try {
-      StripeSession::retrieve($request->get('session_id'));
+      $shano_stripe->validateSession($request->get('session_id'));
       $shopping_cart = new ShoppingCart();
       $shopping_cart->updateTicketsInEvents()
         ->removeAllTickets();

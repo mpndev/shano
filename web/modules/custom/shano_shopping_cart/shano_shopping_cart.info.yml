@@ -3,3 +3,5 @@ type: module
 description: 'Just take people`s money.'
 package: Custom
 core: '8.x'
+configure: shano_shopping_cart.stripe_settings
+
