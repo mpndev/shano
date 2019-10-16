@@ -2,6 +2,8 @@
 
 namespace Drupal\shano_shopping_cart;
 
+use Drupal\Component\Utility\Random;
+
 class ShoppingCart {
 
   /**
@@ -172,6 +174,23 @@ class ShoppingCart {
     $this->shopping_cart->set('tickets', $tickets);
 
     return $this;
+  }
+
+  /**
+   * @return $this
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function produceSecureTickets() {
+    PurchasedTickets::save($this->getTickets());
+
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getSecureTicketsForHumans() {
+    return $tickets_text = PurchasedTickets::forHumans();
   }
 
 }

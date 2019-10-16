@@ -2,7 +2,6 @@
 
 namespace Drupal\shano_shopping_cart\Controller;
 
-use Drupal\Component\Utility\Random;
 use Drupal\shano_shopping_cart\Event;
 use Drupal\shano_shopping_cart\Order;
 use Drupal\Core\Controller\ControllerBase;
@@ -43,6 +42,7 @@ class ShanoShoppingCartController extends ControllerBase {
     $response['#attached']['library'][] = 'shano_shopping_cart/shano-stripe';
     return $response;
   }
+
   /**
    * @param \Symfony\Component\HttpFoundation\Request $request
    *
@@ -54,19 +54,18 @@ class ShanoShoppingCartController extends ControllerBase {
       $shano_stripe->validateSession($request->get('session_id'));
       $shopping_cart = new ShoppingCart();
       $shopping_cart->updateTicketsInEvents()
+        ->produceSecureTickets()
         ->removeAllTickets();
     } catch (\Exception $e) {
       return ['#markup' => 'brd!'];
     }
 
-    $pass = Random::string(20);
-    $text1 = t('Your pass for this event/s is');
-    $text2 = t('Copy this password or make a screen-shot');
-    $text3 = t('This is your ticket for the event/s');
-    $text4 = t('Thanks');
-    return ['#markup' => "$text1: \"$pass\"<br/>$text2.<br/>$text3<br/>$text4!"];
+    return ['#markup' => $shopping_cart->getSecureTicketsForHumans()];
   }
 
+  /**
+   * @return array
+   */
   private function getTwigData() {
     $twig_data = [];
     $shopping_cart = new ShoppingCart();
