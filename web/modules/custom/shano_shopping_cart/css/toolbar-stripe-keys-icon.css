@@ -1,0 +1,7 @@
+.toolbar-icon-shano-shopping-cart-stripe-settings:before {
+  background-image: url('../misc/icons/stripe-keys.png');
+}
+.toolbar-icon-shano-shopping-cart-stripe-settings:active:before,
+.toolbar-icon-shano-shopping-cart-stripe-settings.is-active:before {
+  background-image: url('../misc/icons/stripe-keys.png');
+}

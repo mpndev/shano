@@ -1,0 +1,6 @@
+shano_shopping_cart.stripe_settings:
+  title: 'Stripe Keys'
+  description: 'Module settings form'
+  parent: system.admin
+  route_name: shano_shopping_cart.stripe_settings
+  weight: 100

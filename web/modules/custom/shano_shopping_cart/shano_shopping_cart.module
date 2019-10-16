@@ -19,3 +19,10 @@ function shano_shopping_cart_theme($existing, $type, $theme, $path) {
 function shano_preprocess_page(&$variables) {
   $variables['#attached']['library'][] = 'shano/shano-main';
 }
+
+function shano_shopping_cart_page_attachments(array &$attachments) {
+  $user_is_admin = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id())->hasRole('administrator');
+  if (user_is_admin) {
+    $attachments ['#attached']['library'][] = 'shano_shopping_cart/toolbar-stripe-keys-icon';
+  }
+}

@@ -35,24 +35,52 @@ class StripeConfigurationForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Stripe Public Key (Testing Mode)'),
       '#default_value' => $config->get('stripe_public_key_test'),
+      '#states' => [
+        'visible' => [
+          ':input[name="live_or_test"]' => [
+            'value' => '1'
+          ],
+        ],
+      ],
     ];
 
     $form['stripe_secret_key_test'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Stripe Secret Key (Testing Mode)'),
       '#default_value' => $config->get('stripe_secret_key_test'),
+      '#states' => [
+        'visible' => [
+          ':input[name="live_or_test"]' => [
+            'value' => '1'
+          ],
+        ],
+      ],
     ];
 
     $form['stripe_public_key_live'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Stripe Public Key (Live Mode)'),
       '#default_value' => $config->get('stripe_public_key_live'),
+      '#states' => [
+        'visible' => [
+          ':input[name="live_or_test"]' => [
+            'value' => '0'
+          ],
+        ],
+      ],
     ];
 
     $form['stripe_secret_key_live'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Stripe Secret Key (Live Mode)'),
       '#default_value' => $config->get('stripe_secret_key_live'),
+      '#states' => [
+        'visible' => [
+          ':input[name="live_or_test"]' => [
+            'value' => '0'
+          ],
+        ],
+      ],
     ];
 
     $form['live_or_test'] = [

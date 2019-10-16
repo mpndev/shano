@@ -2,7 +2,14 @@ stripe:
   version: 3
   js:
     https://js.stripe.com/v3/: {}
+
 shano-stripe:
   version: 1.x
   js:
     js/shano-stripe.js: {}
+
+toolbar-stripe-keys-icon:
+  version: 1.0
+  css:
+    theme:
+      css/toolbar-stripe-keys-icon.css: {}
