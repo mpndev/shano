@@ -3,7 +3,6 @@
 namespace Drupal\shano_shopping_cart;
 
 use Drupal\node\Entity\Node;
-use Drupal\paragraphs\Entity\Paragraph;
 
 class Event {
 
@@ -21,9 +20,14 @@ class Event {
    */
   public $tickets = [];
 
+  /**
+   * Event constructor.
+   *
+   * @param $id
+   */
   public function __construct($id) {
     $this->event = Node::load($id);
-    $this->tickets = Paragraph::load($this->event->get('field_tickets')->getValue()[0]['target_id']);
+    $this->tickets = new Tickets($this);
   }
 
   /**
@@ -46,7 +50,11 @@ class Event {
    * @return bool
    */
   public function haveAvailableTickets() {
-    return $this->tickets->get('field_quantity')->getString() > 0;
+    return $this->tickets->getQuantity();
+  }
+
+  public function tickets() {
+    return $this->tickets->get();
   }
 
 }

@@ -2,12 +2,14 @@
 
 namespace Drupal\shano_shopping_cart\Controller;
 
+use Drupal\Component\Utility\Random;
 use Drupal\shano_shopping_cart\Event;
+use Drupal\shano_shopping_cart\Order;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\shano_shopping_cart\Form\ReduceTicketForm;
 use Drupal\shano_shopping_cart\ShanoStripe;
 use Drupal\shano_shopping_cart\ShoppingCart;
 use Symfony\Component\HttpFoundation\Request;
+use Drupal\shano_shopping_cart\Form\ReduceTicketForm;
 
 class ShanoShoppingCartController extends ControllerBase {
   /**
@@ -16,36 +18,19 @@ class ShanoShoppingCartController extends ControllerBase {
    */
   public function index() {
     $shopping_cart = new ShoppingCart();
-    $events_from_db = [];
-    $stripe_line_items = [];
+    $shano_stripe = new ShanoStripe();
+    $order = new Order();
+
     if ($shopping_cart->isEmpty()) {
       return ['#markup' => t('Your Shopping Cart is Empty :(')];
     }
-    foreach ($shopping_cart->getTickets() as $key => $event_data) {
-      $event = (new Event($event_data['event_id']));
-      $stripe_line_items[] = [
-        'name' => $event->event->getTitle(),
-        'description' => strip_tags($event->event->get('field_event_d')->value),
-        'amount' => $event->tickets->get('field_price')->value * 100,
-        'currency' => 'usd',
-        'quantity' => $event_data['tickets_quantity'],
-      ];
-      $events_from_db[$key]['id'] = $event->event->id();
-      $events_from_db[$key]['description'] = strip_tags($event->event->get('field_event_d')->value);
-      $events_from_db[$key]['image_url'] = $event->event->field_event_image->entity->uri->value;
-      $events_from_db[$key]['image_alt'] = $event->event->field_event_image->alt;
-      $events_from_db[$key]['ordered_tickets_quantity'] = $event_data['tickets_quantity'];
-      $events_from_db[$key]['ordered_tickets_quantity_text'] = ($event_data['tickets_quantity'] > 1)
-        ? t(' tickets are currently in the cart.')
-        : t(' ticket is currently in the cart.');
 
-      $events_from_db[$key]['reduce_ticket_form'] = \Drupal::formBuilder()->getForm(new ReduceTicketForm($event->event->id()));
-    }
-    $shano_stripe = new ShanoStripe();
-    $shano_stripe->createSession($stripe_line_items);
+    $order->prepare($shopping_cart);
+    $shano_stripe->prepare($order->get());
+
     $response = [
       '#theme' => 'shopping_cart_index',
-      '#events' => $events_from_db,
+      '#events' => $this->getTwigData(),
       '#total' => $shopping_cart->getTotal(),
       '#attached' => [
         'drupalSettings' => [
@@ -73,8 +58,34 @@ class ShanoShoppingCartController extends ControllerBase {
     } catch (\Exception $e) {
       return ['#markup' => 'brd!'];
     }
-    $ticket_pass = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(20/strlen($x)) )),1, 20);
-    return ['#markup' => 'Your pass for this event/s is: "' . $ticket_pass . '".<br/>Copy this password or make a screen-shot.<br/>This is your ticket for the event/s<br/>Thanks!'];
+
+    $pass = Random::string(20);
+    $text1 = t('Your pass for this event/s is');
+    $text2 = t('Copy this password or make a screen-shot');
+    $text3 = t('This is your ticket for the event/s');
+    $text4 = t('Thanks');
+    return ['#markup' => "$text1: \"$pass\"<br/>$text2.<br/>$text3<br/>$text4!"];
+  }
+
+  private function getTwigData() {
+    $twig_data = [];
+    $shopping_cart = new ShoppingCart();
+
+    foreach ($shopping_cart->getTickets() as $key => $event_data) {
+      $event = new Event($event_data['event_id']);
+      $twig_data[$key]['id'] = $event->event->id();
+      $twig_data[$key]['description'] = strip_tags($event->event->get('field_event_d')->value);
+      $twig_data[$key]['image_url'] = $event->event->field_event_image->entity->uri->value;
+      $twig_data[$key]['image_alt'] = $event->event->field_event_image->alt;
+      $twig_data[$key]['ordered_tickets_quantity'] = $event_data['tickets_quantity'];
+      $twig_data[$key]['ordered_tickets_quantity_text'] = ($event_data['tickets_quantity'] > 1)
+        ? t(' tickets are currently in the cart.')
+        : t(' ticket is currently in the cart.');
+
+      $twig_data[$key]['reduce_ticket_form'] = \Drupal::formBuilder()->getForm(new ReduceTicketForm($event->event->id()));
+    }
+
+    return $twig_data;
   }
 
 }

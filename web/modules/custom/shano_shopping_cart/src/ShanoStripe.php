@@ -36,7 +36,7 @@ class ShanoStripe {
    * @return $this
    * @throws \Stripe\Exception\ApiErrorException
    */
-  public function createSession(array $stripe_line_items) {
+  public function prepare(array $stripe_line_items) {
     $this->session = StripeSession::create([
       'payment_method_types' => ['card'],
       'line_items' => $stripe_line_items,
@@ -57,7 +57,7 @@ class ShanoStripe {
     try {
       StripeSession::retrieve($session_id);
     } catch (\Exception $e) {
-      throw new \Exception("Invalid Session!");
+      throw new \Exception("Invalid Session id!");
     }
     return $this;
   }

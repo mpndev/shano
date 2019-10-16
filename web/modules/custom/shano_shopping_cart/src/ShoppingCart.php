@@ -81,13 +81,13 @@ class ShoppingCart {
 
   /**
    * @return $this
-   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Exception
    */
   public function updateTicketsInEvents() {
     foreach ($this->getTickets() as $ticket) {
       $event = new Event($ticket['event_id']);
-      if ($ticket['tickets_quantity'] > $event->tickets->get('field_quantity')->value) {
-        throw new \Exception("Not Enough Tickets!");
+      if ($ticket['tickets_quantity'] > $event->tickets()->get('field_quantity')->value) {
+        throw new \Exception("Not Enough Tickets to purchase!");
       }
     }
 
@@ -95,11 +95,11 @@ class ShoppingCart {
       $event = new Event($ticket['event_id']);
 
       $shopping_cart_tickets_quantity = $ticket['tickets_quantity'];
-      $event_tickets_quantity = $event->tickets->get('field_quantity')->value;
+      $event_tickets_quantity = $event->tickets()->get('field_quantity')->value;
       $remaining_tickets = $event_tickets_quantity - $shopping_cart_tickets_quantity;
 
-      $event->tickets->set('field_quantity', $remaining_tickets);
-      $event->tickets->save();
+      $event->tickets()->set('field_quantity', $remaining_tickets);
+      $event->tickets()->save();
     }
 
     return $this;
@@ -112,7 +112,7 @@ class ShoppingCart {
 
     $total = 0;
     foreach ($this->getTickets() as $ticket) {
-      $price = intval((new Event($ticket['event_id']))->tickets->get('field_price')->value * 100);
+      $price = intval((new Event($ticket['event_id']))->tickets->get()->get('field_price')->value * 100);
       $quantity = $ticket['tickets_quantity'];
       $total += ($price * $quantity);
     }

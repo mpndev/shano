@@ -7,10 +7,12 @@ use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Ajax\RedirectCommand;
+use Drupal\Core\Ajax\SettingsCommand;
 use Drupal\shano_shopping_cart\Event;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Ajax\OpenModalDialogCommand;
+use Drupal\shano_shopping_cart\ShanoStripe;
 use Drupal\shano_shopping_cart\ShoppingCart;
+use Drupal\Core\Ajax\OpenModalDialogCommand;
 
 class ReduceTicketForm extends FormBase {
 
@@ -98,6 +100,8 @@ class ReduceTicketForm extends FormBase {
         return $response;
       }
     }
+
+    //$response->addCommand(new SettingsCommand ($data));
     $response->addCommand(new HtmlCommand('#stripe-button', t('Buy the tickets for:') . ' ' . $shopping_cart->getTotal() . '$'));
     $response->addCommand(new OpenModalDialogCommand($this->event->title, $dialog_text, ['width' => '300']));
 
